@@ -45,7 +45,7 @@ public class BookStoreDomainSharedModule : AbpModule
         Configure<AbpLocalizationOptions>(options =>
         {
             options.Resources
-                .Add<BookStoreResource>("en")
+                .Add<BookStoreResource>("zh-Hans")
                 .AddBaseTypes(typeof(AbpValidationResource))
                 .AddVirtualJson("/Localization/BookStore");
 
