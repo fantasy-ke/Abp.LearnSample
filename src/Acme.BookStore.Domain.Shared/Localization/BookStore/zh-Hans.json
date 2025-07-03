@@ -60,6 +60,11 @@
     "Enum:BookType.5": "恐怖",
     "Enum:BookType.6": "科学",
     "Enum:BookType.7": "科幻小说",
-    "Enum:BookType.8": "诗歌"
+    "Enum:BookType.8": "诗歌",
+    "Permission:BookStore": "书店",
+    "Permission:Books": "图书管理",
+    "Permission:Books.Create": "新增书籍",
+    "Permission:Books.Edit": "编辑图书",
+    "Permission:Books.Delete": "删除图书"
   }
 }
