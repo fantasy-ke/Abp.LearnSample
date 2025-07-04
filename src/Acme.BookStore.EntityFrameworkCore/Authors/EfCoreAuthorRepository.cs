@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
+using System.Linq.Dynamic.Core;
 
 namespace Acme.BookStore.Authors;
 
@@ -18,8 +19,8 @@ public class AuthorRepository : EfCoreRepository<BookStoreDbContext, Author, Gui
     }
     public async Task<Author> FindByNameAsync(string name)
     {
-        var queryable = await GetQueryableAsync();
-        return await queryable.FirstOrDefaultAsync(author => author.Name == name)!;
+        var dbSet = await GetDbSetAsync();
+        return await dbSet.FirstOrDefaultAsync(author => author.Name == name);
     }
 
     public async Task<List<Author>> GetListAsync(
@@ -28,13 +29,10 @@ public class AuthorRepository : EfCoreRepository<BookStoreDbContext, Author, Gui
         string sorting,
         string filter = null)
     {
-        var queryable = await GetQueryableAsync();
-        return await queryable
-            .WhereIf<Author, IQueryable<Author>>(
-                !filter.IsNullOrWhiteSpace(),
-                author => author.Name.Contains(filter)
-            )
-            //.OrderBy(sorting)
+        var dbSet = await GetDbSetAsync();
+        return await dbSet
+            .WhereIf(!filter.IsNullOrWhiteSpace(),author => author.Name.Contains(filter))
+            .OrderBy(sorting)
             .As<IQueryable<Author>>()
             .Skip(skipCount)
             .Take(maxResultCount)
