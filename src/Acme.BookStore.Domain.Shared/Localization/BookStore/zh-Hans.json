@@ -66,6 +66,10 @@
     "Permission:Books.Create": "新增书籍",
     "Permission:Books.Edit": "编辑图书",
     "Permission:Books.Delete": "删除图书",
-    "BookStore:00001": "已存在同名作者：{name}"
+    "BookStore:00001": "已存在同名作者：{name}",
+    "Permission:Authors": "作者管理",
+    "Permission:Authors.Create": "新增作者",
+    "Permission:Authors.Edit": "编辑作者",
+    "Permission:Authors.Delete": "删除作者"
   }
 }
