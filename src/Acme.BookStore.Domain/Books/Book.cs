@@ -29,4 +29,7 @@ public class Book:AuditedAggregateRoot<Guid>
     /// </summary>
     public float Price { get; set; }
 
+
+    public Guid AuthorId { get; set; }
+
 }
