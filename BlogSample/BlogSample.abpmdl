@@ -1,0 +1,101 @@
+{
+  "template": "app",
+  "imports": {
+    "Volo.Abp.LeptonXLiteTheme": {
+      "version": "4.2.1",
+      "isInstalled": true
+    },
+    "Volo.Abp.Account": {
+      "version": "9.2.1",
+      "isInstalled": true
+    },
+    "Volo.Abp.OpenIddict": {
+      "version": "9.2.1",
+      "isInstalled": true
+    },
+    "Volo.Abp.Identity": {
+      "version": "9.2.1",
+      "isInstalled": true
+    },
+    "Volo.Abp.TenantManagement": {
+      "version": "9.2.1",
+      "isInstalled": true
+    },
+    "Volo.Abp.SettingManagement": {
+      "version": "9.2.1",
+      "isInstalled": true
+    },
+    "Volo.Abp.PermissionManagement": {
+      "version": "9.2.1",
+      "isInstalled": true
+    },
+    "Volo.Abp.FeatureManagement": {
+      "version": "9.2.1",
+      "isInstalled": true
+    }
+  },
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {}
+    }
+  },
+  "packages": {
+    "BlogSample.Application": {
+      "path": "src/BlogSample.Application/BlogSample.Application.abppkg",
+      "folder": "src"
+    },
+    "BlogSample.Application.Tests": {
+      "path": "test/BlogSample.Application.Tests/BlogSample.Application.Tests.abppkg",
+      "folder": "test"
+    },
+    "BlogSample.Domain.Shared": {
+      "path": "src/BlogSample.Domain.Shared/BlogSample.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "BlogSample.Application.Contracts": {
+      "path": "src/BlogSample.Application.Contracts/BlogSample.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "BlogSample.HttpApi": {
+      "path": "src/BlogSample.HttpApi/BlogSample.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "BlogSample.HttpApi.Client": {
+      "path": "src/BlogSample.HttpApi.Client/BlogSample.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "BlogSample.EntityFrameworkCore.Tests": {
+      "path": "test/BlogSample.EntityFrameworkCore.Tests/BlogSample.EntityFrameworkCore.Tests.abppkg",
+      "folder": "test"
+    },
+    "BlogSample.EntityFrameworkCore": {
+      "path": "src/BlogSample.EntityFrameworkCore/BlogSample.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "BlogSample.TestBase": {
+      "path": "test/BlogSample.TestBase/BlogSample.TestBase.abppkg",
+      "folder": "test"
+    },
+    "BlogSample.Domain.Tests": {
+      "path": "test/BlogSample.Domain.Tests/BlogSample.Domain.Tests.abppkg",
+      "folder": "test"
+    },
+    "BlogSample.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/BlogSample.HttpApi.Client.ConsoleTestApp/BlogSample.HttpApi.Client.ConsoleTestApp.abppkg",
+      "folder": "test"
+    },
+    "BlogSample.DbMigrator": {
+      "path": "src/BlogSample.DbMigrator/BlogSample.DbMigrator.abppkg",
+      "folder": "src"
+    },
+    "BlogSample.HttpApi.Host": {
+      "path": "src/BlogSample.HttpApi.Host/BlogSample.HttpApi.Host.abppkg",
+      "folder": "src"
+    },
+    "BlogSample.Domain": {
+      "path": "src/BlogSample.Domain/BlogSample.Domain.abppkg",
+      "folder": "src"
+    }
+  }
+}
