@@ -107,9 +107,9 @@ public class BookStoreDbMigrationService : ITransientDependency
         
         await _dataSeeder.SeedAsync(new DataSeedContext(tenant?.Id)
             .WithProperty(IdentityDataSeedContributor.AdminEmailPropertyName,
-                BookStoreConsts.AdminEmailDefaultValue)
+                CoreIdentityConsts.AdminEmailDefaultValue)
             .WithProperty(IdentityDataSeedContributor.AdminPasswordPropertyName,
-                BookStoreConsts.AdminPasswordDefaultValue)
+                CoreIdentityConsts.AdminPasswordDefaultValue)
         );
     }
 
