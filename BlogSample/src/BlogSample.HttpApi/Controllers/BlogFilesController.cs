@@ -50,7 +50,6 @@ public class BlogFilesController: AbpController,IFileAppService
     [Route("images/upload")]
     public async Task<JsonResult> UploadImage(IFormFile file)
     {
-        //TODO: localize exception messages
 
         if (file == null)
         {

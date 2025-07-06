@@ -1,5 +1,9 @@
 using AutoMapper;
 using BlogSample.Blogs;
+using BlogSample.Posts;
+using BlogSample.Tags;
+using Volo.Abp.AutoMapper;
+using Volo.Abp.Identity;
 
 namespace BlogSample;
 
@@ -11,5 +15,15 @@ public class BlogSampleApplicationAutoMapperProfile : Profile
          * Alternatively, you can split your mapping configurations
          * into multiple profile classes for a better organization. */
         CreateMap<Blog, BlogDto>();
+        CreateMap<IdentityUser, BlogUserDto>();
+
+        CreateMap<Post, PostCacheItem>().Ignore(x => x.CommentCount).Ignore(x => x.Tags);
+        CreateMap<Post, PostWithDetailsDto>().Ignore(x => x.Writer).Ignore(x => x.CommentCount).Ignore(x => x.Tags);
+        CreateMap<PostCacheItem, PostWithDetailsDto>()
+            .Ignore(x => x.Writer)
+            .Ignore(x => x.CommentCount)
+            .Ignore(x => x.Tags);
+
+        CreateMap<Tag, TagDto>();
     }
 }
