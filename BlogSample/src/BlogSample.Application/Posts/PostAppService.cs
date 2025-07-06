@@ -14,7 +14,7 @@ namespace BlogSample.Posts;
 
 public class PostAppService : BlogSampleAppService, IPostAppService
 {
-    protected IBlogUserLookupService _userLookupService { get; }
+    private readonly IBlogUserLookupService _userLookupService;
     readonly IPostRepository _postRepository;
     readonly ITagRepository _tagRepository;
     readonly ICommentRepository _commentRepository;
