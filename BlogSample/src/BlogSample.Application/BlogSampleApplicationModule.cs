@@ -1,4 +1,7 @@
-﻿using Volo.Abp.PermissionManagement;
+﻿using BlogSample.Comments;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.DependencyInjection;
+using Volo.Abp.PermissionManagement;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.Account;
 using Volo.Abp.Identity;
@@ -27,5 +30,14 @@ public class BlogSampleApplicationModule : AbpModule
         {
             options.AddMaps<BlogSampleApplicationModule>();
         });
+        
+        // 注册
+        Configure<AuthorizationOptions>(options =>
+        {
+            options.AddPolicy("BloggingUpdatePolicy", policy => policy.Requirements.Add(CommonOperations.Update));
+            options.AddPolicy("BloggingDeletePolicy", policy => policy.Requirements.Add(CommonOperations.Delete));
+        });
+
+        context.Services.AddSingleton<IAuthorizationHandler, CommentAuthorizationHandler>();
     }
 }

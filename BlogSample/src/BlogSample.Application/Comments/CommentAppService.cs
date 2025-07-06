@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlogSample.Permissions;
 using BlogSample.Posts;
 using BlogSample.Users;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Guids;
 using Volo.Abp.Identity;
 using Volo.Abp.Users;
@@ -84,6 +86,7 @@ public class CommentAppService : BlogSampleAppService, ICommentAppService
         return hierarchicalComments;
     }
 
+    [Authorize(BlogSamplePermissions.Comments.Create)]
     public async Task<CommentWithDetailsDto> CreateAsync(CreateCommentDto input)
     {
         // 也可以使用这种方式(这里只是介绍用法) GuidGenerator.Create()
@@ -96,9 +99,12 @@ public class CommentAppService : BlogSampleAppService, ICommentAppService
         return ObjectMapper.Map<Comment, CommentWithDetailsDto>(comment);
     }
 
+    [Authorize]
     public async Task<CommentWithDetailsDto> UpdateAsync(Guid id, UpdateCommentDto input)
     {
         var comment = await _commentRepository.GetAsync(id);
+        
+        await AuthorizationService.CheckAsync(comment, CommonOperations.Update);
 
         comment.SetText(input.Text);
 
@@ -107,9 +113,11 @@ public class CommentAppService : BlogSampleAppService, ICommentAppService
         return ObjectMapper.Map<Comment, CommentWithDetailsDto>(comment);
     }
 
+    [Authorize]
     public async Task DeleteAsync(Guid id)
     {
-        await _commentRepository.DeleteAsync(id);
+        var comment = await _commentRepository.GetAsync(id);
+        await AuthorizationService.CheckAsync(comment, CommonOperations.Delete);
 
         var replies = await _commentRepository.GetRepliesOfComment(id);
 

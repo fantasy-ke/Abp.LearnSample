@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BlogSample.Permissions;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
@@ -8,6 +10,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace BlogSample.Blogs;
 
+[Authorize(BlogSamplePermissions.Blogs.Management)]
 public class BlogAppService: BlogSampleAppService, IBlogAppService
 {
     private readonly IBlogRepository _blogRepository;

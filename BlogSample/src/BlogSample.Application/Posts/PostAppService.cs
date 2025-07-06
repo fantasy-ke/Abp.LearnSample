@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BlogSample.Comments;
+using BlogSample.Permissions;
 using BlogSample.Tags;
 using BlogSample.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Caching.Distributed;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Caching;
@@ -22,7 +24,8 @@ public class PostAppService : BlogSampleAppService, IPostAppService
     private readonly ILocalEventBus _localEventBus;
 
     public PostAppService(IPostRepository postRepository, ITagRepository tagRepository,
-        IBlogUserLookupService userLookupService, ICommentRepository commentRepository, IDistributedCache<List<PostCacheItem>> postsCache, ILocalEventBus localEventBus)
+        IBlogUserLookupService userLookupService, ICommentRepository commentRepository,
+        IDistributedCache<List<PostCacheItem>> postsCache, ILocalEventBus localEventBus)
     {
         _postRepository = postRepository;
         _tagRepository = tagRepository;
@@ -88,7 +91,7 @@ public class PostAppService : BlogSampleAppService, IPostAppService
             }
         );
         var postsWithDetails = ObjectMapper.Map<List<PostCacheItem>, List<PostWithDetailsDto>>(postCacheItems);
-        
+
         foreach (var post in postsWithDetails)
         {
             if (post.CreatorId.HasValue)
@@ -142,6 +145,7 @@ public class PostAppService : BlogSampleAppService, IPostAppService
         return postDto;
     }
 
+    [Authorize(BlogSamplePermissions.Posts.Delete)]
     public async Task DeleteAsync(Guid id)
     {
         // 查找文章
@@ -158,7 +162,7 @@ public class PostAppService : BlogSampleAppService, IPostAppService
         await PublishPostChangedEventAsync(id);
     }
 
-
+    [Authorize(BlogSamplePermissions.Posts.Create)]
     public async Task<PostWithDetailsDto> CreateAsync(CreatePostDto input)
     {
         input.Url = await RenameUrlIfItAlreadyExistAsync(input.BlogId, input.Url);
@@ -184,6 +188,7 @@ public class PostAppService : BlogSampleAppService, IPostAppService
         return ObjectMapper.Map<Post, PostWithDetailsDto>(post);
     }
 
+    [Authorize(BlogSamplePermissions.Posts.Update)]
     public async Task<PostWithDetailsDto> UpdateAsync(Guid id, UpdatePostDto input)
     {
         var post = await _postRepository.GetAsync(id);
@@ -221,6 +226,7 @@ public class PostAppService : BlogSampleAppService, IPostAppService
         await AddNewTags(newTags, post);
     }
 
+    [Authorize(BlogSamplePermissions.Tags.Delete)]
     private async Task RemoveOldTags(ICollection<string> newTags, Post post)
     {
         foreach (var oldTag in post.Tags.ToList())
@@ -243,6 +249,7 @@ public class PostAppService : BlogSampleAppService, IPostAppService
         }
     }
 
+    [Authorize(BlogSamplePermissions.Tags.Create)]
     private async Task AddNewTags(IEnumerable<string> newTags, Post post)
     {
         var tags = await _tagRepository.GetListAsync(post.BlogId);
@@ -274,14 +281,14 @@ public class PostAppService : BlogSampleAppService, IPostAppService
 
         return new List<string>(tags.Split(",").Select(t => t.Trim()));
     }
-    
+
     private async Task<List<PostCacheItem>> GetTimeOrderedPostsAsync(Guid blogId)
     {
         var posts = await _postRepository.GetOrderedList(blogId);
 
         return ObjectMapper.Map<List<Post>, List<PostCacheItem>>(posts);
     }
-    
+
     private async Task PublishPostChangedEventAsync(Guid blogId)
     {
         await _localEventBus.PublishAsync(new PostChangedEvent(blogId));
